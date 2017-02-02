@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+//intentを使用する時に書く
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     //自分のターンか相手のターンかの２択だからboolean型
     //とりあえず、自分のターンからとしてtrue
     boolean isMyTurn = true;
+
+    int turnCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         //ここで１度押したボタンを押せなくする
         //ここでは上で引数としてどのボタンを押したか指定してあるからbuttonで大丈夫
         button.setEnabled(false);
+
+        turnCount++;
     }
 
     //揃ったかを判定して、勝ち負けを判定。textViewに表示する
@@ -130,24 +136,36 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         //textView使う時に書く
         TextView textView = (TextView) findViewById(R.id.textView);
 
-        //たて１列が揃ったらtextViewに「◯の勝ち」
-        //getTextでボタンに表示される文字を取得
-        if (button1.getText() == symbol && button4.getText() == symbol && button7.getText() == symbol) {
-            textView.setText(symbol + "の勝ち");
-        } else if (button2.getText() == symbol && button5.getText() == symbol && button8.getText() == symbol) {
-            textView.setText(symbol + "の勝ち");
-        } else if (button3.getText() == symbol && button6.getText() == symbol && button9.getText() == symbol) {
-            textView.setText(symbol + "の勝ち");
-        } else if (button1.getText() == symbol && button2.getText() == symbol && button3.getText() == symbol) {
-            textView.setText(symbol + "の勝ち");
-        } else if (button4.getText() == symbol && button5.getText() == symbol && button6.getText() == symbol) {
-            textView.setText(symbol + "の勝ち");
-        } else if (button7.getText() == symbol && button8.getText() == symbol && button9.getText() == symbol) {
-            textView.setText(symbol + "の勝ち");
-        } else if (button1.getText() == symbol && button5.getText() == symbol && button9.getText() == symbol) {
-            textView.setText(symbol + "の勝ち");
-        } else if (button3.getText() == symbol && button5.getText() == symbol && button7.getText() == symbol) {
-            textView.setText(symbol + "の勝ち");
+        //条件が揃うまでは勝敗を決められないから、winnerはfalse
+        //「||(or)」はどちらかがtrueになったら、trueになるから、どれか()内の条件が揃ったら,boolean型のwinnerはtrueになる
+        boolean winner = false;
+        winner = winner || (button1.getText() == symbol && button4.getText() == symbol && button7.getText() == symbol);
+        winner = winner || (button2.getText() == symbol && button5.getText() == symbol && button8.getText() == symbol);
+        winner = winner || (button3.getText() == symbol && button6.getText() == symbol && button9.getText() == symbol);
+        winner = winner || (button1.getText() == symbol && button2.getText() == symbol && button3.getText() == symbol);
+        winner = winner || (button4.getText() == symbol && button5.getText() == symbol && button6.getText() == symbol);
+        winner = winner || (button7.getText() == symbol && button8.getText() == symbol && button9.getText() == symbol);
+        winner = winner || (button1.getText() == symbol && button5.getText() == symbol && button9.getText() == symbol);
+        winner = winner || (button3.getText() == symbol && button5.getText() == symbol && button7.getText() == symbol);
+
+        if(winner){
+            //ResultActivityに移る
+            //Intent(今いるアクティビティー.this,移る先のアクティビティー.class)
+            Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+            intent.putExtra("WINNER",symbol);
+            //この行でresultアクティビティーが起動
+            startActivity(intent);
         }
+
+        if(turnCount == 9){
+            //ResultActivityに移る
+            //Intent(今いるアクティビティー.this,移る先のアクティビティー.class)
+            Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+            intent.putExtra("WINNER","引き分け");
+            //この行でresultアクティビティーが起動
+            startActivity(intent);
+        }
+
+        //勝敗のカウントがリセットされるところは置いといて、引き分けの対応を考える
     }
 }
