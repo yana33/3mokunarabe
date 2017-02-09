@@ -32,29 +32,4 @@
         android:layout_marginBottom="16dp"
         android:id="@+id/button_againBattle" />
 
-    <TextView
-        android:text="◯の勝った数；0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="23dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginTop="39dp"
-        android:id="@+id/textView3"
-        android:textSize="15sp"
-        android:layout_below="@+id/textView2"
-        android:layout_toLeftOf="@+id/button_againBattle"
-        android:layout_toStartOf="@+id/button_againBattle" />
-
-    <TextView
-        android:text="×の勝った数；0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:textSize="15sp"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_alignRight="@+id/button_againBattle"
-        android:layout_alignEnd="@+id/button_againBattle"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp" />
 </RelativeLayout>

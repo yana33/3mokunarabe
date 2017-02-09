@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     //とりあえず、自分のターンからとしてtrue
     boolean isMyTurn = true;
 
+    //ボタンを押した回数をカウントする
     int turnCount = 0;
 
     @Override
@@ -73,8 +74,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     //viewはアクティビティーにのっているもの。とりあえず、引数はView
     public void onClick(View v) {
-        //textView使う時に書く
-        TextView textView = (TextView) findViewById(R.id.textView);
 
         switch (v.getId()){
             case R.id.button_reset:
@@ -88,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 button7.setText("");
                 button8.setText("");
                 button9.setText("");
-                textView.setText("");
+                //ここでreset押した時にボタンを押した回数のカウントを0に戻す
+                turnCount = 0;
                 //ボタンをもう一度押せるようにする
                 button1.setEnabled(true);
                 button2.setEnabled(true);
@@ -128,13 +128,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         //ここでは上で引数としてどのボタンを押したか指定してあるからbuttonで大丈夫
         button.setEnabled(false);
 
+        //ボタンを何回押したかカウント
         turnCount++;
     }
 
     //揃ったかを判定して、勝ち負けを判定。textViewに表示する
     public void decideWinner(String symbol) {
-        //textView使う時に書く
-        TextView textView = (TextView) findViewById(R.id.textView);
 
         //条件が揃うまでは勝敗を決められないから、winnerはfalse
         //「||(or)」はどちらかがtrueになったら、trueになるから、どれか()内の条件が揃ったら,boolean型のwinnerはtrueになる
@@ -150,19 +149,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         if(winner){
             //ResultActivityに移る
+            //Intentはアクティビティー間の橋渡し
             //Intent(今いるアクティビティー.this,移る先のアクティビティー.class)
             Intent intent = new Intent(MainActivity.this,ResultActivity.class);
-            intent.putExtra("WINNER",symbol);
+
+            //putExtraの第一引数は、キー名です。第二引数が、渡したい値です。
+            //渡したい値をキー名にコピーしてresultアクティビティに渡す
+            intent.putExtra("WINNER",symbol + "の勝ち");
+
             //この行でresultアクティビティーが起動
             startActivity(intent);
         }
 
-        if(turnCount == 9){
-            //ResultActivityに移る
-            //Intent(今いるアクティビティー.this,移る先のアクティビティー.class)
+        //引き分けの場合の処理
+        if(turnCount == 8){
             Intent intent = new Intent(MainActivity.this,ResultActivity.class);
             intent.putExtra("WINNER","引き分け");
-            //この行でresultアクティビティーが起動
             startActivity(intent);
         }
 
