@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.yanai.a3mokunarabe.ResultActivity">
+    tools:context="com.example.yanai.a3mokunarabe.ResultActivity"
+    android:background="@android:color/holo_green_light">
 
     <TextView
         android:text="Winner"
@@ -18,7 +19,8 @@
         android:id="@+id/textView2"
         android:textSize="50sp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/background_light" />
 
     <Button
         android:text="Once again battle"
