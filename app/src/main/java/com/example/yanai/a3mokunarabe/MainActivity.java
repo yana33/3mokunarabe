@@ -9,6 +9,8 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 //intentを使用する時に書く
 import android.content.Intent;
+//ランダム関数を使用する時に書く！
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     //viewはアクティビティーにのっているもの。とりあえず、引数はView
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.button_reset:
                 //resetボタンを押した時
                 button1.setText("");
@@ -116,21 +118,136 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             //ここで毎回、勝敗の判定
             //◯を引数としてdecideWinnerに渡す
             decideWinner("◯");
-        } else {
-            button.setText("×");
-            //ここで毎回、勝敗の判定
-            decideWinner("×");
+
+
+
+            if(turnCount <= 3){
+                //×を自動で打って、勝敗の判定
+                //はじめはtrueにしておく
+                boolean b = true;
+                //bははじめtrueだからsetPCturnは実行される
+                //setPCturnに行った時に、×が打てなかったらtrueを返すことになっているから、もう一度setPCtrunが実行
+                //×が打てたらfalseを返してbに格納することになっているから、while文を抜けることができる
+                while (b){
+                    b = setPCturn();
+                }
+                decideWinner("×");
+            }
         }
-        //!は反転。if文を抜けたら自然とtrueとfalseが入れ替わるように
-        //isMyTurnは変数名
+
+        /*!は反転。if文を抜けたら自然とtrueとfalseが入れ替わるように
+          //isMyTurnは変数名
         isMyTurn = !isMyTurn;
+          //ここで反転させてたから×を押した時のカウントがされちゃってた！
+        */
+
         //ここで１度押したボタンを押せなくする
         //ここでは上で引数としてどのボタンを押したか指定してあるからbuttonで大丈夫
         button.setEnabled(false);
 
-        //ボタンを何回押したかカウント
+        //ボタンを何回押したかカウント　ここにこれを書くことで◯だけ数えるように？
         turnCount++;
+
+        /*ここで×ボタンをランダムに押す？
+        button.setText("×");
+        //ここで毎回、勝敗の判定
+        decideWinner("×");
+
+        //×を打ったボタンを無効にしないといかんかな？
+        */
     }
+
+
+    //×をつける時はランダムに打つ！けど、◯とか×が付いていないことが条件！
+    //Rondom関数はInt型で！
+    //×用のメソッドを作成！乱数も使えるように！
+    public boolean setPCturn() {
+        Random rnd = new Random();
+
+        //まずは、ランダムな数字を出す！乱数の範囲は１から９だから0〜8
+        int number = rnd.nextInt(8);
+
+        //そしたら、ランダムに出た数字で、×を打つボタンを決定。switchで一つずつ×を打っていく
+        //ボタンに◯か×がないといは×をつけれるように
+        switch (number) {
+            case 0:
+                if(button1.getText() == "") {
+                    button1.setText("×");
+                    //ボタンを無効にする
+                    button1.setEnabled(false);
+                    return false;
+                }else{
+                    return true;
+                }
+            case 1:
+                if(button2.getText() == "") {
+                    button2.setText("×");
+                    button2.setEnabled(false);
+                    return false;
+                }else{
+                    return true;
+                }
+            case 2:
+                if(button3.getText() == "") {
+                    button3.setText("×");
+                    button3.setEnabled(false);
+                    return false;
+                }else{
+                    return true;
+                }
+            case 3:
+                if(button4.getText() == "") {
+                    button4.setText("×");
+                    button4.setEnabled(false);
+                    return false;
+                }else{
+                    return true;
+                }
+            case 4:
+                if(button5.getText() == "") {
+                    button5.setText("×");
+                    button5.setEnabled(false);
+                    return false;
+                }else{
+                    return true;
+                }
+            case 5:
+                if(button6.getText() == "") {
+                    button6.setText("×");
+                    button6.setEnabled(false);
+                    return false;
+                }else{
+                    return true;
+                }
+            case 6:
+                if(button7.getText() == "") {
+                    button7.setText("×");
+                    button7.setEnabled(false);
+                    return false;
+                }else{
+                    return true;
+                }
+            case 7:
+                if(button8.getText() == "") {
+                    button8.setText("×");
+                    button8.setEnabled(false);
+                    return false;
+                }else{
+                    return true;
+                }
+            case 8:
+                if(button9.getText() == "") {
+                    button9.setText("×");
+                    button9.setEnabled(false);
+                    return false;
+                }else{
+                    return true;
+                }
+            default:
+                return true;
+        }
+    }
+
 
     //揃ったかを判定して、勝ち負けを判定。textViewに表示する
     public void decideWinner(String symbol) {
@@ -147,27 +264,26 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         winner = winner || (button1.getText() == symbol && button5.getText() == symbol && button9.getText() == symbol);
         winner = winner || (button3.getText() == symbol && button5.getText() == symbol && button7.getText() == symbol);
 
-        if(winner){
+        if (winner) {
             //ResultActivityに移る
             //Intentはアクティビティー間の橋渡し
             //Intent(今いるアクティビティー.this,移る先のアクティビティー.class)
-            Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
 
             //putExtraの第一引数は、キー名です。第二引数が、渡したい値です。
             //渡したい値をキー名にコピーしてresultアクティビティに渡す
-            intent.putExtra("WINNER",symbol + "の勝ち");
+            intent.putExtra("WINNER", symbol + "の勝ち");
 
             //この行でresultアクティビティーが起動
             startActivity(intent);
-        }
-
-        //引き分けの場合の処理
-        if(turnCount == 8){
-            Intent intent = new Intent(MainActivity.this,ResultActivity.class);
-            intent.putExtra("WINNER","引き分け");
+        }else if(turnCount == 4){
+            //引き分けの場合の処理
+            //PC相手で引き分けのとき、先攻がボタンを押すのは最大５回
+            //先攻が押したボタンの回数を数えればOK ...だから◯と×の場合分けがいらなくなるのかな？
+            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+            intent.putExtra("WINNER", "引き分け");
             startActivity(intent);
         }
-
-        //勝敗のカウントがリセットされるところは置いといて、引き分けの対応を考える
+        
     }
 }
