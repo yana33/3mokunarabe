@@ -27,15 +27,30 @@ public class StartActivity extends AppCompatActivity implements OnClickListener 
     }
 
     public void onClick(View v) {
+        //Intent(今いるアクティビティー.this,移る先のアクティビティー.class)
         Intent intent = new Intent(StartActivity.this,MainActivity.class);
         switch (v.getId()){
             case R.id.button_PlayFirst:
-                //この行でresultアクティビティーが起動
+
+                //putExtraの第一引数は、キー名。第二引数が、渡したい値。
+                //渡したい値をキー名にコピーしてresultアクティビティに渡す
+                intent.putExtra("TURN","◯");
+
+                //この行でMainアクティビティーが起動
                 startActivity(intent);
                 break;
 
             case R.id.button_DrawFirst:
+
+                intent.putExtra("TURN","×");
                 startActivity(intent);
+                break;
+            default:
+                intent.putExtra("TURN","");
+
+                //この行でMainアクティビティーが起動
+                startActivity(intent);
+                break;
         }
     }
 }
