@@ -12,7 +12,7 @@
     android:background="@android:color/holo_orange_light">
 
     <Button
-        android:text="◯が先攻"
+        android:text="先攻：◯"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -25,7 +25,7 @@
         android:textSize="20sp" />
 
     <Button
-        android:text="×が後攻"
+        android:text="後攻：×"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_below="@+id/button_PlayFirst"

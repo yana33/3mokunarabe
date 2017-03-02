@@ -180,6 +180,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         switch (v.getId()) {
             case R.id.button_reset:
                 //resetボタンを押した時
+
+                //1_ボタンをまっさらに戻す
                 button1.setText("");
                 button2.setText("");
                 button3.setText("");
@@ -189,9 +191,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 button7.setText("");
                 button8.setText("");
                 button9.setText("");
-                //ここでreset押した時にボタンを押した回数のカウントを0に戻す
+                //2_ここでreset押した時にボタンを押した回数のカウントを0に戻す
                 turnCount = 0;
-                //ボタンをもう一度押せるようにする
+                //3_そして、ボタンをもう一度押せるようにする
                 button1.setEnabled(true);
                 button2.setEnabled(true);
                 button3.setEnabled(true);
@@ -215,20 +217,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     public void setButtonText(Button button) {
         if (isMyTurn == "◯") {
             //↑（）内がtrueならこのかっこ内が実行される。falseのときは、実行されずに丸っとスルー
+
+            //◯は自分が先攻だから、×と違って自分からボタンを選択
+
             button.setText("◯");
             //ここで毎回、勝敗の判定
             //◯を引数としてdecideWinnerに渡す
             decideWinner("◯");
 
-
             //turnCountが0〜3の4回のときは、×を自動で打つように
             if (turnCount <= 3) {
                 //はじめはsetPCturnは実行されるようにtrueにしておく
-                boolean b = true;
+                boolean b1 = true;
                 //setPCturnに行った時に、×が打てなかったらtrueを返すことになっているから、もう一度setPCtrunが実行
                 //×が打てたらfalseを返してbに格納することになっているから、while文を抜けることができる
-                while (b) {
-                    b = setPCturn("×");
+                while (b1) {
+                    b1 = setPCturn("×");
                 }
                 //勝敗の判定
                 decideWinner("×");
@@ -236,29 +240,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             //ここで◯が１度押したボタンを押せなくする
             //ここでは上で引数としてどのボタンを押したか指定してあるからbuttonで大丈夫
             button.setEnabled(false);
+            //これを書くことで×を押した回数をカウント
+            //◯の５回目を押したとき、見えないけど×が5になるから上のループを抜ける
+            turnCount++;
 
         } else if (isMyTurn == "×") {
 
-            //はじめに◯を自動で打たないと！！
-
-            //turnCountが0〜3の4回のときは、×を自動で打つように
+            //turnCountが0〜3の4回のときは、◯を自動で打つように
             if (turnCount <= 3) {
                 //はじめはsetPCturnは実行されるようにtrueにしておく
-                boolean b = true;
+                boolean b2 = true;
+
                 //setPCturnに行った時に、×が打てなかったらtrueを返すことになっているから、もう一度setPCtrunが実行
                 //×が打てたらfalseを返してbに格納することになっているから、while文を抜けることができる
-                while (b) {
-                    b = setPCturn("◯");
+                while (b2) {
+                    b2 = setPCturn("◯");
+                    android.util.Log.d("kokodayo", "b2は " + b2);
                 }
                 decideWinner("◯");
             }
 
             button.setText("×");
-            decideWinner("◯");
+            decideWinner("×");
 
             button.setEnabled(false);
 
-            //ボタンを何回押したかカウント　ここにこれを書くことで◯だけ数えるように？
+            //ボタンを何回押したかカウント ×の回数
             turnCount++;
 
         }
@@ -274,17 +281,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         //まずは、ランダムな数字を出す！乱数の範囲は１から９だから0〜8
         int number = rnd.nextInt(8);
+        android.util.Log.d("kokodayo", "変数numberは " + number);
 
         //そしたら、ランダムに出た数字で、×を打つボタンを決定。switchで一つずつ×を打っていく
         //ボタンに◯か×がないといは×をつけれるように
         switch (number) {
             case 0:
                 if (button1.getText() == "") {
+                    //もしボタンが真っ白だったら、受け取った◯または×をボタンにセット
                     button1.setText(symbol_a);
                     //ボタンを無効にする
                     button1.setEnabled(false);
                     return false;
                 } else {
+                    //真っ白じゃなかったら、trueを返す
                     return true;
                 }
             case 1:
