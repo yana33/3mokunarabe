@@ -191,8 +191,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 button7.setText("");
                 button8.setText("");
                 button9.setText("");
+
                 //2_ここでreset押した時にボタンを押した回数のカウントを0に戻す
                 turnCount = 0;
+
                 //3_そして、ボタンをもう一度押せるようにする
                 button1.setEnabled(true);
                 button2.setEnabled(true);
@@ -203,6 +205,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 button7.setEnabled(true);
                 button8.setEnabled(true);
                 button9.setEnabled(true);
+
+
+
+                //自分が先攻の場合はこのままボタンを押せるようにすればいいんだけど、後攻の場合はCPUが先
+                if(isMyTurn == "◯"){
+                    setButtonText((Button) findViewById(v.getId()));
+                }else if(isMyTurn == "×"){
+                    //setPCturn("◯");
+                    //turnCount++;
+                    setButtonText((Button) findViewById(v.getId()));
+                }
+
+
+                button_reset.setEnabled(true);
+
+
                 break;
             default:
                 //defaultでcaseに当てはまらなかった場合のすべての場合の処理を指定
