@@ -246,6 +246,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         } else if (isMyTurn == "×") {
 
+            button.setText("×");
+
             //turnCountが0〜3の4回のときは、◯を自動で打つように
             if (turnCount <= 3) {
                 //はじめはsetPCturnは実行されるようにtrueにしておく
@@ -260,7 +262,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 decideWinner("◯");
             }
 
-            button.setText("×");
             decideWinner("×");
 
             button.setEnabled(false);
