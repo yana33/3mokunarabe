@@ -13,8 +13,26 @@ public class ResultActivity extends AppCompatActivity implements OnClickListener
 
     //ボタンの宣言
     Button button_againBattle;
+    Button button1;
+    Button button2;
+    Button button3;
+    Button button4;
+    Button button5;
+    Button button6;
+    Button button7;
+    Button button8;
+    Button button9;
 
     String winner = "";
+    String result1 = "";
+    String result2 = "";
+    String result3 = "";
+    String result4 = "";
+    String result5 = "";
+    String result6 = "";
+    String result7 = "";
+    String result8 = "";
+    String result9 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +43,27 @@ public class ResultActivity extends AppCompatActivity implements OnClickListener
         Intent intent = getIntent();
         //String型で受け取り
         winner = intent.getStringExtra("WINNER");
+
+        result1 = intent.getStringExtra("RESULT1");
+        result2 = intent.getStringExtra("RESULT2");
+        result3 = intent.getStringExtra("RESULT3");
+        result4 = intent.getStringExtra("RESULT4");
+        result5 = intent.getStringExtra("RESULT5");
+        result6 = intent.getStringExtra("RESULT6");
+        result7 = intent.getStringExtra("RESULT7");
+        result8 = intent.getStringExtra("RESULT8");
+        result9 = intent.getStringExtra("RESULT9");
+
+        button1.setText(result1);
+        button2.setText(result2);
+        button3.setText(result3);
+        button4.setText(result4);
+        button5.setText(result5);
+        button6.setText(result6);
+        button7.setText(result7);
+        button8.setText(result8);
+        button9.setText(result9);
+
 
         //textView使う時に書く
         //idに注意！
