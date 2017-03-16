@@ -206,21 +206,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 button8.setEnabled(true);
                 button9.setEnabled(true);
 
-
-
                 //自分が先攻の場合はこのままボタンを押せるようにすればいいんだけど、後攻の場合はCPUが先
-                if(isMyTurn == "◯"){
-                    setButtonText((Button) findViewById(v.getId()));
-                }else if(isMyTurn == "×"){
-                    //setPCturn("◯");
-                    //turnCount++;
-                    setButtonText((Button) findViewById(v.getId()));
+                if(isMyTurn == "×"){
+                    setMaru();
                 }
 
-
                 button_reset.setEnabled(true);
-
-
                 break;
             default:
                 //defaultでcaseに当てはまらなかった場合のすべての場合の処理を指定
@@ -264,6 +255,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         } else if (isMyTurn == "×") {
 
+            button.setText("×");
+
             //turnCountが0〜3の4回のときは、◯を自動で打つように
             if (turnCount <= 3) {
                 //はじめはsetPCturnは実行されるようにtrueにしておく
@@ -278,7 +271,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 decideWinner("◯");
             }
 
-            button.setText("×");
             decideWinner("×");
 
             button.setEnabled(false);
