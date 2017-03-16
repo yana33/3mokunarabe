@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.content.Intent;
 //ランダム関数を使用する時に書く！
 import java.util.Random;
+import java.util.logging.Handler;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -191,10 +192,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 button7.setText("");
                 button8.setText("");
                 button9.setText("");
-
                 //2_ここでreset押した時にボタンを押した回数のカウントを0に戻す
                 turnCount = 0;
-
                 //3_そして、ボタンをもう一度押せるようにする
                 button1.setEnabled(true);
                 button2.setEnabled(true);
@@ -205,13 +204,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 button7.setEnabled(true);
                 button8.setEnabled(true);
                 button9.setEnabled(true);
-
-                //自分が先攻の場合はこのままボタンを押せるようにすればいいんだけど、後攻の場合はCPUが先
-                if(isMyTurn == "×"){
-                    setMaru();
-                }
-
-                button_reset.setEnabled(true);
                 break;
             default:
                 //defaultでcaseに当てはまらなかった場合のすべての場合の処理を指定
@@ -221,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 break;
         }
     }
+
 
     //ここでなんのボタンを押したか、受け取って判断
     public void setButtonText(Button button) {
@@ -255,6 +248,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         } else if (isMyTurn == "×") {
 
+            //
             button.setText("×");
 
             //turnCountが0〜3の4回のときは、◯を自動で打つように
@@ -402,16 +396,41 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             //渡したい値をキー名にコピーしてresultアクティビティに渡す
             intent.putExtra("WINNER", symbol + "の勝ち");
 
+            intent.putExtra("RESULT1",button1.getText());
+            intent.putExtra("RESULT2",button2.getText());
+            intent.putExtra("RESULT3",button3.getText());
+            intent.putExtra("RESULT4",button4.getText());
+            intent.putExtra("RESULT5",button5.getText());
+            intent.putExtra("RESULT6",button6.getText());
+            intent.putExtra("RESULT7",button7.getText());
+            intent.putExtra("RESULT8",button8.getText());
+            intent.putExtra("RESULT9",button9.getText());
+
+
             //この行でresultアクティビティーが起動
             startActivity(intent);
+
         } else if (turnCount == 4) {
             //引き分けの場合の処理
             //PC相手で引き分けのとき、先攻がボタンを押すのは最大５回
             //先攻が押したボタンの回数を数えればOK ...だから◯と×の場合分けがいらなくなるのかな？
             Intent intent = new Intent(MainActivity.this, ResultActivity.class);
             intent.putExtra("WINNER", "引き分け");
+
+            intent.putExtra("RESULT1",button1.getText());
+            intent.putExtra("RESULT2",button2.getText());
+            intent.putExtra("RESULT3",button3.getText());
+            intent.putExtra("RESULT4",button4.getText());
+            intent.putExtra("RESULT5",button5.getText());
+            intent.putExtra("RESULT6",button6.getText());
+            intent.putExtra("RESULT7",button7.getText());
+            intent.putExtra("RESULT8",button8.getText());
+            intent.putExtra("RESULT9",button9.getText());
+
             startActivity(intent);
         }
+
+        //resultアクティビティーにボタンかなんかを作って、mainのゲームの結果を持ってきて、◯×をボタンに順番通り表示
 
     }
 }
