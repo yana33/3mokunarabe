@@ -54,6 +54,47 @@ public class ResultActivity extends AppCompatActivity implements OnClickListener
         result8 = intent.getStringExtra("RESULT8");
         result9 = intent.getStringExtra("RESULT9");
 
+
+        //textView使う時に書く
+        //idに注意！
+        TextView textView = (TextView) findViewById(R.id.textView2);
+
+
+        //ビューに対して割り当てられたリソースIDから対応するビューオブジェクトを取得してみます。
+        // Activityクラスで定義されているfindViewByIdメソッドを使用します。
+        //引数にリソースIDを指定すると、対応するビューのオブジェクトを返します。
+        // 実際に使用する時は戻り値をそのビューのクラスでキャストして下さい。
+        button1 = (Button) findViewById(R.id.button1);
+        button1.setOnClickListener(this);
+
+        button2 = (Button) findViewById(R.id.button2);
+        button2.setOnClickListener(this);
+
+        button3 = (Button) findViewById(R.id.button3);
+        button3.setOnClickListener(this);
+
+        button4 = (Button) findViewById(R.id.button4);
+        button4.setOnClickListener(this);
+
+        button5 = (Button) findViewById(R.id.button5);
+        button5.setOnClickListener(this);
+
+        button6 = (Button) findViewById(R.id.button6);
+        button6.setOnClickListener(this);
+
+        button7 = (Button) findViewById(R.id.button7);
+        button7.setOnClickListener(this);
+
+        button8 = (Button) findViewById(R.id.button8);
+        button8.setOnClickListener(this);
+
+        button9 = (Button) findViewById(R.id.button9);
+        button9.setOnClickListener(this);
+
+
+        //受け取った結果を表示
+        textView.setText(winner);
+
         button1.setText(result1);
         button2.setText(result2);
         button3.setText(result3);
@@ -64,16 +105,22 @@ public class ResultActivity extends AppCompatActivity implements OnClickListener
         button8.setText(result8);
         button9.setText(result9);
 
+        //ボタン押せる状態だと、押した時にonceAgainBattleと同じ処理になるから、ボタンを押せないようにしておく
+        button1.setEnabled(false);
+        button2.setEnabled(false);
+        button3.setEnabled(false);
+        button4.setEnabled(false);
+        button5.setEnabled(false);
+        button6.setEnabled(false);
+        button7.setEnabled(false);
+        button8.setEnabled(false);
+        button9.setEnabled(false);
 
-        //textView使う時に書く
-        //idに注意！
-        TextView textView = (TextView) findViewById(R.id.textView2);
-
-        //受け取った結果を表示
-        textView.setText(winner);
 
         button_againBattle = (Button) findViewById(R.id.button_againBattle);
         button_againBattle.setOnClickListener(this);
+
+
     }
 
     public void onClick(View v) {
