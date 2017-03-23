@@ -255,11 +255,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         } else if (isMyTurn == "×") {
 
-            //
             button.setText("×");
+            button.setEnabled(false);
+
+            //ボタンを何回押したかカウント ×の回数
+            turnCount++;
+            android.util.Log.d("kokodayo", "ボタンを押した回数は " + turnCount);
 
             //turnCountが0〜3の4回のときは、◯を自動で打つように
-            if (turnCount <= 3) {
+            if (turnCount <= 4) {
                 //はじめはsetPCturnは実行されるようにtrueにしておく
                 boolean b2 = true;
 
@@ -272,14 +276,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 decideWinner("◯");
             }
 
-            decideWinner("×");
-
-            button.setEnabled(false);
-
-            //ボタンを何回押したかカウント ×の回数
-            turnCount++;
-            android.util.Log.d("kokodayo", "ボタンを押した回数は " + turnCount);
-
+            //☆もしこの時点で◯が勝っていたら、×の勝敗判定をしないようにする
+                decideWinner("×");
 
         }
     }
@@ -381,7 +379,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
 
     //揃ったかを判定して、勝ち負けを判定。textViewに表示する
-    public void decideWinner(String symbol) {
+    public boolean decideWinner(String symbol) {
 
         //条件が揃うまでは勝敗を決められないから、winnerはfalse
         //「||(or)」はどちらかがtrueになったら、trueになるから、どれか()内の条件が揃ったら,boolean型のwinnerはtrueになる
