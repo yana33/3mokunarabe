@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         turn = intent.getStringExtra("TURN");
 
 
-
         //ビューに対して割り当てられたリソースIDから対応するビューオブジェクトを取得してみます。
         // Activityクラスで定義されているfindViewByIdメソッドを使用します。
         //引数にリソースIDを指定すると、対応するビューのオブジェクトを返します。
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }
 
     //はじめの◯を一つ、ランダムに打つメソッド
-    public void setMaru(){
+    public void setMaru() {
         Random rnd = new Random();
 
         //まずは、ランダムな数字を出す！乱数の範囲は１から９だから0〜8
@@ -170,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 break;
             default:
                 //とりあえず
-                button9.setEnabled(false);;
+                button9.setEnabled(false);
         }
     }
 
@@ -204,7 +203,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 button7.setEnabled(true);
                 button8.setEnabled(true);
                 button9.setEnabled(true);
+
+                //後攻のresetを押した場合、◯があらかじめ押されている状態にするため
+                if (isMyTurn == "×") {
+                    setMaru();
+                }
                 break;
+
             default:
                 //defaultでcaseに当てはまらなかった場合のすべての場合の処理を指定
                 //setButton()の()内が丸っと引数
@@ -245,6 +250,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             //これを書くことで×を押した回数をカウント
             //◯の５回目を押したとき、見えないけど×が5になるから上のループを抜ける
             turnCount++;
+            android.util.Log.d("kokodayo", "ボタンを押した回数は " + turnCount);
+
 
         } else if (isMyTurn == "×") {
 
@@ -271,14 +278,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
             //ボタンを何回押したかカウント ×の回数
             turnCount++;
+            android.util.Log.d("kokodayo", "ボタンを押した回数は " + turnCount);
+
 
         }
     }
 
 
-        //×をつける時はランダムに打つ！けど、◯とか×が付いていないことが条件！
-        //Rondom関数はInt型で！
-        //×用のメソッドを作成！乱数も使えるように！
+    //×をつける時はランダムに打つ！けど、◯とか×が付いていないことが条件！
+    //Rondom関数はInt型で！
+    //×用のメソッドを作成！乱数も使えるように！
 
     public boolean setPCturn(String symbol_a) {
         Random rnd = new Random();
@@ -396,15 +405,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             //渡したい値をキー名にコピーしてresultアクティビティに渡す
             intent.putExtra("WINNER", symbol + "の勝ち");
 
-            intent.putExtra("RESULT1",button1.getText());
-            intent.putExtra("RESULT2",button2.getText());
-            intent.putExtra("RESULT3",button3.getText());
-            intent.putExtra("RESULT4",button4.getText());
-            intent.putExtra("RESULT5",button5.getText());
-            intent.putExtra("RESULT6",button6.getText());
-            intent.putExtra("RESULT7",button7.getText());
-            intent.putExtra("RESULT8",button8.getText());
-            intent.putExtra("RESULT9",button9.getText());
+            intent.putExtra("RESULT1", button1.getText());
+            intent.putExtra("RESULT2", button2.getText());
+            intent.putExtra("RESULT3", button3.getText());
+            intent.putExtra("RESULT4", button4.getText());
+            intent.putExtra("RESULT5", button5.getText());
+            intent.putExtra("RESULT6", button6.getText());
+            intent.putExtra("RESULT7", button7.getText());
+            intent.putExtra("RESULT8", button8.getText());
+            intent.putExtra("RESULT9", button9.getText());
 
 
             //この行でresultアクティビティーが起動
@@ -417,15 +426,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             Intent intent = new Intent(MainActivity.this, ResultActivity.class);
             intent.putExtra("WINNER", "引き分け");
 
-            intent.putExtra("RESULT1",button1.getText());
-            intent.putExtra("RESULT2",button2.getText());
-            intent.putExtra("RESULT3",button3.getText());
-            intent.putExtra("RESULT4",button4.getText());
-            intent.putExtra("RESULT5",button5.getText());
-            intent.putExtra("RESULT6",button6.getText());
-            intent.putExtra("RESULT7",button7.getText());
-            intent.putExtra("RESULT8",button8.getText());
-            intent.putExtra("RESULT9",button9.getText());
+            intent.putExtra("RESULT1", button1.getText());
+            intent.putExtra("RESULT2", button2.getText());
+            intent.putExtra("RESULT3", button3.getText());
+            intent.putExtra("RESULT4", button4.getText());
+            intent.putExtra("RESULT5", button5.getText());
+            intent.putExtra("RESULT6", button6.getText());
+            intent.putExtra("RESULT7", button7.getText());
+            intent.putExtra("RESULT8", button8.getText());
+            intent.putExtra("RESULT9", button9.getText());
 
             startActivity(intent);
         }
