@@ -9,6 +9,8 @@ import android.view.View.OnClickListener;
 //intentを使用する時に書く
 import android.content.Intent;
 //ランダム関数を使用する時に書く！
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Handler;
 
@@ -234,13 +236,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
             //turnCountが0〜3の4回のときは、×を自動で打つように
             if (turnCount <= 3) {
-                //はじめはsetPCturnは実行されるようにtrueにしておく
-                boolean b1 = true;
-                //setPCturnに行った時に、×が打てなかったらtrueを返すことになっているから、もう一度setPCtrunが実行
-                //×が打てたらfalseを返してbに格納することになっているから、while文を抜けることができる
-                while (b1) {
-                    b1 = setPCturn("×");
-                }
+                markRandom("×");
                 //勝敗の判定
                 decideWinner("×");
             }
@@ -264,22 +260,50 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
             //turnCountが0〜3の4回のときは、◯を自動で打つように
             if (turnCount <= 4) {
-                //はじめはsetPCturnは実行されるようにtrueにしておく
-                boolean b2 = true;
-
-                //setPCturnに行った時に、×が打てなかったらtrueを返すことになっているから、もう一度setPCtrunが実行
-                //×が打てたらfalseを返してbに格納することになっているから、while文を抜けることができる
-                while (b2) {
-                    b2 = setPCturn("◯");
-                    android.util.Log.d("kokodayo", "b2は " + b2);
-                }
+                markRandom("◯");
                 decideWinner("◯");
             }
 
             //☆もしこの時点で◯が勝っていたら、×の勝敗判定をしないようにする
                 decideWinner("×");
-
         }
+    }
+
+    // 空のマスのボタンをリストで返す
+    public List<Button> emptyButtons() {
+        List<Button> emptyButtons = new ArrayList<Button>();
+        Button[] buttons = {
+                button1, button2, button3,
+                button4, button5, button6,
+                button7, button8, button9
+        };
+        for (int i=0; i < buttons.length; i++) {
+            if (buttons[i].getText() == "") {
+                emptyButtons.add(buttons[i]);
+            }
+        }
+        return emptyButtons;
+    }
+
+    // 空いているマスをランダムに一つ選び、引数で指定したマルかバツの印をつける
+    public void markRandom(String symbol_a) {
+        // 空のマスを取得
+        List<Button> emptyButtons = emptyButtons();
+        android.util.Log.d("kokodayo", "からのますは " + emptyButtons.size());
+
+        // 空のマスが一つもなければ終了
+        if (emptyButtons.size() == 0) {
+            return;
+        }
+
+        // ランダムに一つ選ぶ
+        Random rnd = new Random();
+        int rand_index = rnd.nextInt(emptyButtons.size());
+        Button button = emptyButtons.get(rand_index);
+
+        // 印をつける
+        button.setText(symbol_a);
+        button.setEnabled(false);
     }
 
 
