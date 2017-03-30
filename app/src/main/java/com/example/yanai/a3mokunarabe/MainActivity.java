@@ -12,7 +12,10 @@ import android.content.Intent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Handler;
+//import java.util.logging.Handler;
+
+import android.os.Looper;
+import android.os.Handler;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -295,6 +298,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         return emptyButtons;
     }
 
+    public String symbol_cpu = "";
+
     // 空いているマスをランダムに一つ選び、引数で指定したマルかバツの印をつける
     public void markRandom(String symbol_a) {
         // 空のマスを取得
@@ -311,9 +316,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         int rand_index = rnd.nextInt(emptyButtons.size());
         Button button = emptyButtons.get(rand_index);
 
-        // 印をつける
-        button.setText(symbol_a);
-        button.setEnabled(false);
+
+        symbol_cpu = symbol_a;
+
+        //３秒遅らせて◯×を表示
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable(){
+            @Override
+                    public void run(){
+                //ここに入れることで３秒後に実行される
+                // 印をつける
+                button.setText(symbol_cpu);
+                button.setEnabled(false);
+            }
+        }, 3000);
+
     }
 
 
