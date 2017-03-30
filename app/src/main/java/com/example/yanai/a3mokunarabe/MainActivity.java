@@ -210,6 +210,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 if (isMyTurn == "×") {
                     setMaru();
                 }
+                
+                isDecided = false;
                 break;
 
             default:
@@ -236,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
             //turnCountが0〜3の4回のときは、×を自動で打つように
             if (turnCount <= 3) {
+                //ランダムに×を打つメソッド
                 markRandom("×");
                 //勝敗の判定
                 decideWinner("×");
@@ -265,7 +268,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
 
             //☆もしこの時点で◯が勝っていたら、×の勝敗判定をしないようにする
+            //＝もし勝敗が決定していなかったら、×のdecideWinnerを実行する
+
+            //もしこの時点で勝敗が決まらず、ここに戻ってきたら下のif文を実行
+            //戻ってきたときは、isDecideはfalseのはずなのでdecideWinnerを実行する
+            if(isDecided == false){
                 decideWinner("×");
+            }
+
         }
     }
 
@@ -277,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 button4, button5, button6,
                 button7, button8, button9
         };
-        for (int i=0; i < buttons.length; i++) {
+        for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].getText() == "") {
                 emptyButtons.add(buttons[i]);
             }
@@ -307,103 +317,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }
 
 
-    //×をつける時はランダムに打つ！けど、◯とか×が付いていないことが条件！
-    //Rondom関数はInt型で！
-    //×用のメソッドを作成！乱数も使えるように！
 
-    public boolean setPCturn(String symbol_a) {
-        Random rnd = new Random();
 
-        //まずは、ランダムな数字を出す！乱数の範囲は１から９だから0〜8
-        int number = rnd.nextInt(8);
-        android.util.Log.d("kokodayo", "変数numberは " + number);
-
-        //そしたら、ランダムに出た数字で、×を打つボタンを決定。switchで一つずつ×を打っていく
-        //ボタンに◯か×がないといは×をつけれるように
-        switch (number) {
-            case 0:
-                if (button1.getText() == "") {
-                    //もしボタンが真っ白だったら、受け取った◯または×をボタンにセット
-                    button1.setText(symbol_a);
-                    //ボタンを無効にする
-                    button1.setEnabled(false);
-                    return false;
-                } else {
-                    //真っ白じゃなかったら、trueを返す
-                    return true;
-                }
-            case 1:
-                if (button2.getText() == "") {
-                    button2.setText(symbol_a);
-                    button2.setEnabled(false);
-                    return false;
-                } else {
-                    return true;
-                }
-            case 2:
-                if (button3.getText() == "") {
-                    button3.setText(symbol_a);
-                    button3.setEnabled(false);
-                    return false;
-                } else {
-                    return true;
-                }
-            case 3:
-                if (button4.getText() == "") {
-                    button4.setText(symbol_a);
-                    button4.setEnabled(false);
-                    return false;
-                } else {
-                    return true;
-                }
-            case 4:
-                if (button5.getText() == "") {
-                    button5.setText(symbol_a);
-                    button5.setEnabled(false);
-                    return false;
-                } else {
-                    return true;
-                }
-            case 5:
-                if (button6.getText() == "") {
-                    button6.setText(symbol_a);
-                    button6.setEnabled(false);
-                    return false;
-                } else {
-                    return true;
-                }
-            case 6:
-                if (button7.getText() == "") {
-                    button7.setText(symbol_a);
-                    button7.setEnabled(false);
-                    return false;
-                } else {
-                    return true;
-                }
-            case 7:
-                if (button8.getText() == "") {
-                    button8.setText(symbol_a);
-                    button8.setEnabled(false);
-                    return false;
-                } else {
-                    return true;
-                }
-            case 8:
-                if (button9.getText() == "") {
-                    button9.setText(symbol_a);
-                    button9.setEnabled(false);
-                    return false;
-                } else {
-                    return true;
-                }
-            default:
-                return true;
-        }
-    }
-
+    //勝敗が決まったかどうかを判断するプロパティ
+    boolean isDecided = false;
 
     //揃ったかを判定して、勝ち負けを判定。textViewに表示する
-    public boolean decideWinner(String symbol) {
+    public void decideWinner(String symbol) {
 
         //条件が揃うまでは勝敗を決められないから、winnerはfalse
         //「||(or)」はどちらかがtrueになったら、trueになるから、どれか()内の条件が揃ったら,boolean型のwinnerはtrueになる
@@ -441,6 +361,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             //この行でresultアクティビティーが起動
             startActivity(intent);
 
+            //勝ち負けの判定が済んだフラグを立てる
+            //ここまで進んだということは、勝敗が決まったということ。
+            //うえにtrueを返してdecideWinnerの×を実行しないようにする
+            isDecided = true;
+
+
         } else if (turnCount == 4) {
             //引き分けの場合の処理
             //PC相手で引き分けのとき、先攻がボタンを押すのは最大５回
@@ -460,8 +386,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
             startActivity(intent);
         }
-
-        //resultアクティビティーにボタンかなんかを作って、mainのゲームの結果を持ってきて、◯×をボタンに順番通り表示
-
     }
+
+
 }
