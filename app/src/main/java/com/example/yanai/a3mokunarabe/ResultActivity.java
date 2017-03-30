@@ -120,12 +120,11 @@ public class ResultActivity extends AppCompatActivity implements OnClickListener
         button_againBattle = (Button) findViewById(R.id.button_againBattle);
         button_againBattle.setOnClickListener(this);
 
-
     }
 
     public void onClick(View v) {
 
-        //MainActivityに移る
+        //StartActivityに移る
         Intent intent = new Intent(ResultActivity.this, StartActivity.class);
         startActivity(intent);
     }
